@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casta Vibes - Prowler Edition</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #0b0c17; /* deep night vibe */
+      color: #ffffff;
+      line-height: 1.6;
+      text-align: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin: 40px 0 20px;
+      color: #ff2c2c;
+      text-shadow: 0 0 10px #ff2c2c;
+      transition: transform 0.1s;
+    }
+
+    .music-player {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 30px;
+      background: rgba(11,12,23,0.85);
+      border: 2px solid #ff2c2c;
+      border-radius: 20px;
+      box-shadow: 0 0 15px #ff2c2c;
+      z-index: 1000;
+      transition: box-shadow 0.1s;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1.2rem;
+      border: 2px solid #ff2c2c;
+      border-radius: 12px;
+      cursor: pointer;
+      background: transparent;
+      color: #ff2c2c;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      box-shadow: 0 0 15px #ff2c2c;
+    }
+
+    .story-container {
+      max-width: 750px;
+      margin: 50px auto 150px;
+      padding: 30px;
+      background: rgba(11,12,23,0.85);
+      border: 2px solid #ff2c2c;
+      border-radius: 25px;
+      box-shadow: 0 0 20px #ff2c2c;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.1s, transform 0.1s;
+    }
+
+    .story {
+      font-size: 1.2rem;
+      text-align: left;
+      color: #ffffff;
+      position: relative;
+      z-index: 2;
+    }
+
+    .story h2 {
+      text-align: center;
+      color: #ff2c2c;
+      margin-bottom: 20px;
+    }
+
+    .story p {
+      margin-bottom: 20px;
+    }
+
+    /* Floating musical notes */
+    .note {
+      position: fixed;
+      font-size: 24px;
+      color: #ff2c2c;
+      opacity: 0.8;
+      pointer-events: none;
+      animation: floatUp 5s linear infinite;
+      transition: transform 0.1s;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Sparkles behind story in red */
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #ff2c2c 0%, rgba(255,44,44,0) 70%);
+      border-radius: 50%;
+      animation: sparkleAnim 3s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes sparkleAnim {
+      0% { transform: translateY(0) scale(0.5); opacity: 0.6; }
+      50% { transform: translateY(-50px) scale(1); opacity: 0.8; }
+      100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+    }
+
+    footer {
+      text-align: center;
+      margin: 50px 0;
+      color: #ff2c2c;
+    }
+  </style>
+</head>
+<body>
+  <h1>Casta Vibes - Prowler Edition</h1>
+
+  <div class="story-container">
+    <div class="story">
+      <h2>The Hilarious Singing Debut of Casta</h2>
+      <p>Casta, a lively young human with a love for music, always dreamed of performing. One night, while experimenting on his keyboard, he accidentally pressed a combination of keys that produced a crazy catchy beat. Without thinking, he started singing along—and somehow his notes sounded amazing!</p>
+      <p>His friends, hearing the fun performance, ran over to watch. Casta, energized by their laughter, spun around dramatically, hitting high notes like a neon superstar in the night city.</p>
+      <p>By the end, everyone was clapping, calling him the “Night Beat Legend.” Casta realized that sometimes accidents make the best performances—and the neon-red night just made it cooler!</p>
+    </div>
+  </div>
+
+  <div class="music-player">
+    <audio id="castaAudio" src="Casta.mp3"></audio>
+    <button onclick="togglePlay()">Play / Pause</button>
+  </div>
+
+  <footer>
+    Created by [Freddie Rian]
+  </footer>
+
+  <script>
+    const audio = document.getElementById('castaAudio');
+    const container = document.querySelector('.story-container');
+    const player = document.querySelector('.music-player');
+    const title = document.querySelector('h1');
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+        container.style.transform = "scale(1)";
+        container.style.boxShadow = "0 0 20px #ff2c2c";
+        player.style.boxShadow = "0 0 15px #ff2c2c";
+        title.style.transform = "scale(1)";
+      }
+    }
+
+    // Floating neon notes
+    const notes = ["♪", "♫", "♩", "♬", "♭", "♯"];
+    function createNote() {
+      const note = document.createElement("div");
+      note.classList.add("note");
+      note.style.left = Math.random() * window.innerWidth + "px";
+      note.style.fontSize = (16 + Math.random() * 24) + "px";
+      note.style.animationDuration = (4 + Math.random() * 3) + "s";
+      note.textContent = notes[Math.floor(Math.random() * notes.length)];
+      document.body.appendChild(note);
+
+      function pulse() {
+        if (!audio.paused) {
+          const scale = 1 + Math.random() * 0.5;
+          note.style.transform = `scale(${scale})`;
+        } else {
+          note.style.transform = "scale(1)";
+        }
+        requestAnimationFrame(pulse);
+      }
+      pulse();
+
+      setTimeout(() => note.remove(), 7000);
+    }
+    setInterval(createNote, 500);
+
+    // Sparkles
+    function createSparkle() {
+      const sparkle = document.createElement("div");
+      sparkle.classList.add("sparkle");
+      sparkle.style.left = Math.random() * container.offsetWidth + "px";
+      sparkle.style.top = Math.random() * container.offsetHeight + "px";
+      sparkle.style.animationDuration = (2 + Math.random() * 2) + "s";
+      container.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 4000);
+    }
+    setInterval(createSparkle, 200);
+
+    // Pulse story container and player with music
+    function animatePulse() {
+      if (!audio.paused) {
+        const scale = 1 + Math.random() * 0.02; // gentle pulse
+        const shadow = `0 0 ${20 + Math.random() * 10}px #ff2c2c`;
+        container.style.transform = `scale(${scale})`;
+        container.style.boxShadow = shadow;
+        player.style.boxShadow = `0 0 ${15 + Math.random() * 10}px #ff2c2c`;
+        title.style.transform = `scale(${1 + Math.random() * 0.01})`;
+      } else {
+        container.style.transform = "scale(1)";
+        container.style.boxShadow = "0 0 20px #ff2c2c";
+        player.style.boxShadow = "0 0 15px #ff2c2c";
+        title.style.transform = "scale(1)";
+      }
+      requestAnimationFrame(animatePulse);
+    }
+    animatePulse();
+  </script>
+</body>
+</html>
